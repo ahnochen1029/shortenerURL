@@ -19,5 +19,24 @@ router.post('/', (req, res) => {
 
 })
 
+router.get('/:shortenURL', (req, res) => {
+  const shortURL = req.params.shortenURL
+  console.log('shortURL', shortURL)
+
+  let gotoURL = "/"
+  shortenLink.find()
+    .lean()
+    .then(shorteners => {
+      for (const shortener of shorteners) {
+        if (shortURL === shortener.shortenUrl) {
+          gotoURL = shortener.url
+          return gotoURL
+        }
+      }
+    })
+    .then(() => res.redirect(gotoURL))
+    .catch(err => console.log(err))
+})
+
 
 module.exports = router
