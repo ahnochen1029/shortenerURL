@@ -3,10 +3,11 @@ const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 const shortenURL = require('./models/link')
 
-mongoose.connect('mongodb://lacalhost/shortener', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/shortener', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', () => {
   console.log('mongodb error!')
@@ -19,10 +20,21 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 app.get('/', (req, res) => {
-
   res.render('index')
+})
+
+app.post('/shorten', (req, res) => {
+  const showUrl = req.body.url
+  console.log('url', showUrl)
+  return shortenURL.create({
+    url: showUrl,
+  })
+    .then(() => { res.redirect('/') })
+    .catch(err => console.log(err))
 })
 
 app.listen(port, () => {

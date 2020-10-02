@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const shortenURLSchema = new Schema({
   url: {
-    trpe: String,
+    type: String,
   },
   shortenUrl: {
     type: String
