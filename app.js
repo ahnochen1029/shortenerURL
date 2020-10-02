@@ -28,10 +28,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/shorten', (req, res) => {
-  const showUrl = req.body.url
-  console.log('url', showUrl)
+  const url = req.body.url
+  console.log('url', url)
   return shortenURL.create({
-    url: showUrl,
+    url: url,
   })
     .then(() => { res.redirect('/') })
     .catch(err => console.log(err))
