@@ -3,9 +3,11 @@ const Schema = mongoose.Schema
 const shortenURLSchema = new Schema({
   url: {
     type: String,
+    required: true,
   },
+
   shortenUrl: {
-    type: String
+    type: String,
   }
 })
 

@@ -5,7 +5,8 @@ const port = 3000
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-const shortenURL = require('./models/link')
+const shortenLink = require('./models/link')
+const shortenerURL = require('./shortenerURL')
 
 mongoose.connect('mongodb://localhost/shortener', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
@@ -29,12 +30,17 @@ app.get('/', (req, res) => {
 
 app.post('/shorten', (req, res) => {
   const url = req.body.url
-  console.log('url', url)
-  return shortenURL.create({
+  let randomURL = shortenerURL()
+
+  return shortenLink.create({
     url: url,
+    shortenUrl: randomURL,
   })
-    .then(() => { res.redirect('/') })
+    .then(() => {
+      res.render('generated', { randomURL })
+    })
     .catch(err => console.log(err))
+
 })
 
 app.listen(port, () => {

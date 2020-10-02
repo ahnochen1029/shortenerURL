@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="text-center mb-5">
+    <img src="https://support.rebrandly.com/hc/article_attachments/360020801793/rebrandly_url_shortener_010.png" alt=""
+      width="600px">
+  </div>
+
+  <div class="mt-10 d-flex">
+    <form action="/shorten" method="POST" class="col-sm">
+      <div class='col-12 text-center mb-5'>
+        <input type="text" id="url" name="url" class="form-control" height="30px"
+          value="https://desolate-earth-07702.herokuapp.com/{{randomURL}}">
+      </div>
+      <div class='col-sm text-center'>
+        <button class="btn btn-warning" onclick="copyFunction()">Copy URL</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function copyFunction() {
+    const copyURL = document.getElementById('url')
+    copyURL.select();
+    document.execCommand('copy')
+    alert("Copied the URL: " + copyURL.value)
+  }
+</script>
