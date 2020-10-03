@@ -10,7 +10,6 @@
         <h4>Success! Here is the Link:</h4>
         <a href="https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}"
           id="url">https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}</a>
-
       </div>
       <div class='col-sm text-center'>
         <button class="btn btn-warning" onclick="copyFunction()">Copy URL</button>
@@ -22,7 +21,7 @@
 
 <script>
   function copyFunction() {
-    let copyURL = document.getElementById('url')
+    const copyURL = document.getElementById('url')
     console.log("copyURL", copyURL)
     window.getSelection().selectAllChildren(copyURL)
     document.execCommand('copy')
