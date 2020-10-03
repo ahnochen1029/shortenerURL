@@ -4,14 +4,33 @@ const router = express.Router()
 const shortenLink = require('../../models/link')
 const shortenerURL = require('../../shortenerURL')
 
+//create shorten-URL
 router.post('/', (req, res) => {
   const url = req.body.url
-  let randomURL = shortenerURL()
+  let randomURL = ""
+  let URLNotExist = true
 
-  return shortenLink.create({
-    url: url,
-    shortenUrl: randomURL,
-  })
+  shortenLink.find()
+    .lean()
+    .then(urls => {
+      //先尋找是否存在資料庫的url中，如存在直接調用
+      for (const theurl of urls) {
+        if (url === theurl.url) {
+          randomURL = theurl.shortenUrl
+          URLNotExist = false
+          return URLNotExist, randomURL
+        }
+      }
+      //如果在資料庫中不存在，新增randomURL亂碼
+      if (URLNotExist) {
+        randomURL = shortenerURL()
+        shortenLink.create({
+          url: url,
+          shortenUrl: randomURL,
+        })
+        return randomURL
+      }
+    })
     .then(() => {
       res.render('generated', { randomURL })
     })
@@ -21,8 +40,6 @@ router.post('/', (req, res) => {
 
 router.get('/:shortenURL', (req, res) => {
   const shortURL = req.params.shortenURL
-  console.log('shortURL', shortURL)
-
   let gotoURL = "/"
   shortenLink.find()
     .lean()
