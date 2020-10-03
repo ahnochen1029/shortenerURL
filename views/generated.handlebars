@@ -5,26 +5,27 @@
   </div>
 
   <div class="mt-10 d-flex">
-    <form action="/shorten" method="POST" class="col-sm">
+    <div class="col-sm">
       <div class='col-12 text-center mb-5'>
         <h4>Success! Here is the Link:</h4>
-        <a
-          href="https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}">https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}</a>
+        <a href="https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}"
+          id="url">https://desolate-earth-07702.herokuapp.com/shorten/{{randomURL}}</a>
 
       </div>
       <div class='col-sm text-center'>
         <button class="btn btn-warning" onclick="copyFunction()">Copy URL</button>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
 
 <script>
   function copyFunction() {
-    const copyURL = document.getElementById('url')
-    copyURL.select();
+    let copyURL = document.getElementById('url')
+    console.log("copyURL", copyURL)
+    window.getSelection().selectAllChildren(copyURL)
     document.execCommand('copy')
-    alert("Copied the URL: " + copyURL.value)
+    alert("Copied the URL: " + copyURL.innerText)
   }
 </script>
